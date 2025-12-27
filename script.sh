@@ -35,6 +35,17 @@ check_root() {
     fi
 }
 
+install_repo(){
+    if [ -f "./install_repos.sh" ]; then
+        chmod +x ./install_repos.sh
+        ./install_repos.sh
+    else
+        echo -e "${RED}Erreur: Le script install_repos.sh est introuvable.${NC}"
+        echo -e "${YELLOW}Veuillez créer ce script pour définir vos dépôts.${NC}"
+        read -p "Appuyez sur Entrée pour continuer..."
+    fi
+}
+
 menu(){
     echo -e "${BLUE} ╔════════════════════════════════════════════════════════════╗${NC}"
     echo -e "${BLUE} ║${BOLD}                  MENU DE CONFIGURATION                     ${NC}${BLUE}║${NC}"
@@ -47,6 +58,16 @@ menu(){
     echo -e "${BLUE} ║${NC}                                                            ${BLUE}║${NC}"
     echo -e "${BLUE} ╚════════════════════════════════════════════════════════════╝${NC}"
     echo ""
+
+    read -p "Entrez votre choix (1-4): " choix
+
+    case $choix in
+        1) install_repo ;;
+        2) echo "Not implemented yet" ;;
+        3) echo "Not implemented yet" ;;
+        4) exit 0 ;;
+        *) echo -e "${RED}Invalid option${NC}" ;;
+    esac
 }
 
 main() {
