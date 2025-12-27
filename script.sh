@@ -39,6 +39,7 @@ install_repo(){
     if [ -f "./install_repos.sh" ]; then
         chmod +x ./install_repos.sh
         ./install_repos.sh
+        dnf update -y
     else
         echo -e "${RED}Erreur: Le script install_repos.sh est introuvable.${NC}"
         echo -e "${YELLOW}Veuillez créer ce script pour définir vos dépôts.${NC}"
@@ -86,7 +87,9 @@ menu(){
     echo -e "${BLUE} ║${NC}  ${GREEN}[1]${NC} Installer les dépôts                                  ${BLUE}║${NC}"
     echo -e "${BLUE} ║${NC}  ${GREEN}[2]${NC} Installer et supprimer les applications               ${BLUE}║${NC}"
     echo -e "${BLUE} ║${NC}  ${GREEN}[3]${NC} Mettre à jour le système                              ${BLUE}║${NC}"
-    echo -e "${BLUE} ║${NC}  ${RED}[4]${NC} Quitter                                               ${BLUE}║${NC}"
+    echo -e "${BLUE} ║${NC}  ${GREEN}[4]${NC} Configuration du système                              ${BLUE}║${NC}"
+    echo -e "${BLUE} ║${NC}  ${GREEN}[5]${NC} Installation des depost, application et configuration ${BLUE}║${NC}"
+    echo -e "${BLUE} ║${NC}  ${RED}[6]${NC} Quitter                                               ${BLUE}║${NC}"
     echo -e "${BLUE} ║${NC}                                                            ${BLUE}║${NC}"
     echo -e "${BLUE} ╚════════════════════════════════════════════════════════════╝${NC}"
     echo ""
@@ -97,7 +100,9 @@ menu(){
         1) install_repo ;;
         2) install_app ;;
         3) echo "Not implemented yet" ;;
-        4) exit 0 ;;
+        4) echo "Not implemented yet" ;;
+        5) install_repo && install_app && echo "Not implemented yet" ;;
+        6) exit 0 ;;
         *) echo -e "${RED}Invalid option${NC}" ;;
     esac
 }
