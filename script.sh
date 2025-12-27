@@ -46,6 +46,38 @@ install_repo(){
     fi
 }
 
+install_app(){
+    # Installation des paquets depuis app.txt
+    if [ -s "app.txt" ]; then
+        echo -e "${YELLOW}Installation des applications listées dans app.txt...${NC}"
+        dnf install -y $(cat app.txt)
+    else
+        echo -e "${YELLOW}Fichier app.txt manquant ou vide. Ignoré.${NC}"
+    fi
+
+    # Suppression des paquets depuis remove.txt
+    if [ -s "remove.txt" ]; then
+        echo -e "${YELLOW}Suppression des applications listées dans remove.txt...${NC}"
+        dnf remove -y $(cat remove.txt)
+    else
+        echo -e "${YELLOW}Fichier remove.txt manquant ou vide. Ignoré.${NC}"
+    fi
+
+    # Installation des paquets Flatpak depuis flatpack.txt
+    if [ -s "flatpack.txt" ]; then
+        if command -v flatpak &> /dev/null; then
+            echo -e "${YELLOW}Installation des paquets Flatpak listés dans flatpack.txt...${NC}"
+            flatpak install -y $(cat flatpack.txt)
+        else
+            echo -e "${RED}Erreur : Flatpak n'est pas installé. Impossible de traiter flatpack.txt.${NC}"
+        fi
+    else
+        echo -e "${YELLOW}Fichier flatpack.txt manquant ou vide. Ignoré.${NC}"
+    fi
+    
+    read -p "Appuyez sur Entrée pour continuer..."
+}
+
 menu(){
     echo -e "${BLUE} ╔════════════════════════════════════════════════════════════╗${NC}"
     echo -e "${BLUE} ║${BOLD}                  MENU DE CONFIGURATION                     ${NC}${BLUE}║${NC}"
@@ -63,7 +95,7 @@ menu(){
 
     case $choix in
         1) install_repo ;;
-        2) echo "Not implemented yet" ;;
+        2) install_app ;;
         3) echo "Not implemented yet" ;;
         4) exit 0 ;;
         *) echo -e "${RED}Invalid option${NC}" ;;
